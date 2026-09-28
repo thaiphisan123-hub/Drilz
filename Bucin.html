@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Sayang, Maafin Aku ya 🥺</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .kucing {
+            font-size: 120px;
+            animation: bounce 1s infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            max-width: 500px;
+        }
+        
+        .tombol-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn-maaf {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+        }
+        
+        .btn-maaf:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+        }
+        
+        .btn-kabur {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .pesan {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: #c44569;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: 0.5s;
+        }
+        
+        .pesan.tampil {
+            opacity: 1;
+            top: 30px;
+        }
+        
+        .hati-peluk {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            animation: fly 1s ease-out forwards;
+        }
+        
+        @keyframes fly {
+            to {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="kucing">🥺</div>
+    <h1 id="teks">Sayang... Maafin aku ya? 🥺💔</h1>
+    
+    <div class="tombol-container">
+        <button class="btn btn-maaf" id="btnMaaf" onclick="dimaafkan()">Iya, Aku Maafin 💖</button>
+        <button class="btn btn-kabur" id="btnKabur" onmouseover="kabur(this)" onclick="kabur(this)">Engga 😤</button>
+    </div>
+    
+    <div class="pesan" id="pesan"></div>
+
+    <script>
+        const btnKabur = document.getElementById('btnKabur');
+        const pesanList = [
+            "Yakin nggak maafin aku? 🥺",
+            "Aku janji nggak ngulang lagi 😭",
+            "Pleaseee sayang... 🙏",
+            "Aku beliin kamu makanan favorit deh 🍔",
+            "Aku sayang banget sama kamu 💕",
+            "Jangan gitu dong 😔",
+            "Aku nggak bisa hidup tanpa kamu 💔",
+            "Maafin aku ya pleaseee 🥺"
+        ];
+        let indexPesan = 0;
+        
+        function kabur(btn) {
+            // Pindah posisi random
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 100);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            // Tampilkan pesan
+            const pesan = document.getElementById('pesan');
+            pesan.textContent = pesanList[indexPesan % pesanList.length];
+            pesan.classList.add('tampil');
+            indexPesan++;
+            
+            setTimeout(() => pesan.classList.remove('tampil'), 2000);
+            
+            // Ubah teks judul
+            const teks = document.getElementById('teks');
+            const teksList = [
+                "Sayang... Maafin aku ya? 🥺💔",
+                "Aku beneran minta maaf 😭",
+                "Pleaseee... 🥺",
+                "Aku janji berubah 🙏"
+            ];
+            teks.textContent = teksList[Math.floor(Math.random() * teksList.length)];
+        }
+        
+        function dimaafkan() {
+            document.body.innerHTML = `
+                <div style="text-align:center; animation: bounce 1s infinite;">
+                    <div style="font-size: 150px;">🥰</div>
+                    <h1 style="color:white; font-size: 36px; margin-top: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">
+                        Makasih Sayang! 💖<br>Aku Sayang Kamu! ❤️
+                    </h1>
+                    <div style="font-size: 60px; margin-top: 30px;">💕💗💖💝💓</div>
+                </div>
+            `;
+            
+            // Hujan hati
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => buatHatiPeluk(), i * 30);
+            }
+        }
+        
+        function buatHatiPeluk() {
+            const hati = document.createElement('div');
+            hati.className = 'hati-peluk';
+            hati.textContent = ['❤️', '💕', '💖', '💗', '💓', '💝', '🌸'][Math.floor(Math.random() * 7)];
+            hati.style.left = Math.random() * 100 + 'vw';
+            hati.style.top = '100vh';
+            hati.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+            hati.style.setProperty('--y', -(Math.random() * 300 + 200) + 'px');
+            document.body.appendChild(hati);
+            setTimeout(() => hati.remove(), 1000);
+        }
+    </script>
+</body>
+</html>
